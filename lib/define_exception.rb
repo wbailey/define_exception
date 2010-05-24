@@ -1,73 +1,20 @@
-# = Introduction
-#
 # Simple mixin that provides a way of defining custom exception classes
 # with default messages that dries up your code.
 #
-# = The Problem of Laborious Exception Class Definitions
+# = Class Methods
 #
-# Typically you would write the following in your code to define a custom exception
+# <tt>define_exception</tt>( <i>ExceptionName</i>, <i>'Default Error Message'</i> )
 #
-#    class MyError < RuntimeError; end #nodoc
+# The exception name can either be a <i>string</i> or a <i>symbol</i>.  If it is a <i>string</i>
+# then the name will be as provided.  In the <i>symbol</i> case if the symbol is mixed case the
+# result exception name will be as provided.  You also have the option of using underscores and having
+# the method automatically generate the mixed case exception name:
 #
-# This seems simple enough until you have to raise it many times throughout your code
-# and have to provide an error message:
+#     define_exception 'MyError', 'The Default Message'
+#     define_exception :AnotherError, 'Another Default Message'
+#     define_exception :worst_error, 'Worst Default Message'
 #
-#    raise( MyError, 'You shall not do what you just did' )
-#
-# It gets harder when you get tired of writing the same message to the <i>raise</i> command.
-# You can define a hash constant to keep track of common error messages:
-#
-#    ERRORS = { :myerror => 'You shall not do what you just did', ... }
-#
-# and then reference it
-#
-#    raise( MyError, ERRORS[:myerror] )
-#
-# but this just doesn't seem very rubyish.  You can also define the message when you write
-# the custom exception class:
-#
-#    class MyError < RuntimeError
-#      def message
-#        'You shall not do what you just did' )
-#      end
-#    end
-#
-# The problem is that this always uses this message even when overridden in <i>raise</i>
-#
-#    raise( MyError, 'Use this instead' ) # <= 'You shall not do what you just did'
-#
-# The real solution for you class is to override the constructor:
-#
-#    class MyError < RuntimeError
-#      def intialize( message = nil )
-#        super( message || 'Default Error Message' )
-#      end
-#    end
-#
-#    raise MyError                      # <= 'Default Error Message'
-#    raise MyError, 'Not the Default'   # <= 'Not the Default'
-#
-# = A Better Way
-#
-# Though this accomplishes the goal it is laborious to write all this code especially
-# as the number of custom exception definitions grow.  A better solution would be to make
-# a class method available that simply handles creating the exception for use automatically
-# thus drying up our code:
-#
-#    class TestMe
-#      define_exception 'MyError', 'The Default Message'
-#      define_exception 'AnotherError', 'Another Default Message'
-#      define_exception 'WorstError', 'Worst Default Message'
-#      ...
-#      def tester( args )
-#        raise MyError unless ...
-#        raise AnotherError unless ...
-#      end
-#
-#      def worst( args )
-#        raise( WorstError, 'You really messed up' ) unless ...
-#      end
-#    end
+# Any of the above methods will work.
 #
 # = Usage
 #
@@ -82,7 +29,7 @@
 #    include DefineException
 #
 #    class Test
-#      define_exception 'TestMe', 'this is the default message'
+#      define_exception :test_me, 'this is the default message'
 #
 #      def test
 #        raise TestMe
@@ -105,7 +52,7 @@
 #
 # running the above example would correctly produce
 #
-#    wes:~/Define-Exception> ruby test.rb
+#    wes:~/define_exception/examples> ruby sample.rb
 #    this is the default message
 #    test.rb:14:in `test2': You shall not do that again (Test::TestMe)
 #        from test.rb:26
