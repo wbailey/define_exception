@@ -35,6 +35,14 @@ task :rdoc do
   system( 'rdoc --force --inline-source lib/define_exception.rb' )
 end
 
+task :push do
+  system( "gem push pkg/define_exception-#{@@version}.gem" )
+end
+
+task :install_remote do
+  system( "sudo gem install define_exception" )
+end
+
 Spec::Rake::SpecTask.new do |task|
   task.spec_opts = %w( -f n -c )
   task.spec_files = FileList[ 'test/**/*_spec.rb' ]
