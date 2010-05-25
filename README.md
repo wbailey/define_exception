@@ -17,17 +17,26 @@ error has occurred in your application
 
 `class MyCustomException < RuntimeError; end #nodoc`
 
-This works well with *raise*
+This can then be invoked by *raise* with a message
 
 `raise( MyCustomException, 'Your custom error message here' ) unless ...`
 
 If you raise this exception multiple times but want the same error message to be
 presented to the user you have to repeat the above statement which is cumbersome.
-There are some work arounds for handling the messaging but none of them are very
-rubyish.
+You could define a hash for common error messages but this divorces the exception
+from the message it is to deliver.
 
 # A Better Way
 
+A better way of approaching the problem is to define the exception class with a
+default message while preserving the ability to override it using *raise*.  This may
+sound trivial but it is not so straightforward when you subclass off of the ruby
+standard exception classes.  This can be done easily with this gem using any of
+the following constructs:
 
+`define_exception 'MyTestException', 'This is my default message'
+ define_exception :AnotherTestException, 'This is the default message for another exception'
+ define_exception :yet_another_exception, 'There is always more than one way'
+`
 
 
