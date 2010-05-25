@@ -34,11 +34,26 @@ sound trivial but it is not so straightforward when you subclass off of the ruby
 standard exception classes.  This can be done easily with this gem using any of
 the following constructs:
 
-`class MyClass`
-`  define_exception 'MyTestException', 'This is my default message'`
-`  define_exception :AnotherTestException, 'This is the default message for another exception'`
-`  define_exception :yet_another_exception, 'There is always more than one way'`
-`  ...`
-`end`
+    class MyClass
+      define_exception 'MyTestException', 'This is my default message'
+      define_exception :AnotherTestException, 'This is the default message for another exception'
+      define_exception :yet_another_exception, 'There is always more than one way'
+      ...
+    end
 
+Syntactically this has more feel like *attr_accessor* and is succint.  The first argument
+is either a *string* or *symbol* that defines the name of the exception.  Usage of the
+underscore in the symbol name automatically gets converted to camel case for the exception
+name.  The second argument is the string to define the default message.  This allows
+simple error handling to occur repeatedly
+
+    raise MyTestException unless ...
+
+The ability to override the default message is still possible as well
+
+    raise MyTestException, 'This is a one time error message'
+
+# Examples
+
+See examples/
 
