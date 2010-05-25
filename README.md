@@ -6,7 +6,7 @@ when using *raise*.
 
 # Installing
 
-`gem install define_exception`
+    gem install define_exception
 
 ---
 
@@ -15,11 +15,11 @@ when using *raise*.
 It is common in ruby applications to write a custom exception to indicate a special
 error has occurred in your application
 
-`class MyCustomException < RuntimeError; end #nodoc`
+    class MyCustomException < RuntimeError; end #nodoc
 
 This can then be invoked by *raise* with a message
 
-`raise( MyCustomException, 'Your custom error message here' ) unless ...`
+    raise( MyCustomException, 'Your custom error message here' ) unless ...
 
 If you raise this exception multiple times but want the same error message to be
 presented to the user you have to repeat the above statement which is cumbersome.
@@ -55,5 +55,9 @@ The ability to override the default message is still possible as well
 
 # Examples
 
-See examples/
+See *examples/*
+
+# Testing
+
+For examples on how to test code written using this gem using RSpec see *test/define_exception_spec.rb*
 
