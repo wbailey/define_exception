@@ -3,7 +3,7 @@ require 'rake/gempackagetask'
 require 'spec'
 require 'spec/rake/spectask'
 
-@@version='0.0.2'
+@@version='0.0.3'
 
 spec = Gem::Specification.new do |s| 
   s.name = 'define_exception'

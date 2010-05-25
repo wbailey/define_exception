@@ -62,13 +62,17 @@
 # Author:: Wes Bailey, wes@verticalresponse.com
 # License:: Ruby License
 
+class String
+  def lame_camel_case
+    /_/.match( self ) ? self.to_s.split( '_' ).inject( '' ) { |s,v| s << v.capitalize } : self
+  end
+end
+
 module DefineException
   module ClassMethods
-    def define_exception( exception_name, default_message = 'Application Error Occurred' )
-      exception_name = exception_name.to_s.split( '_' ).inject( '' ) { |s,v| s << v.capitalize } if /\_/.match( exception_name.to_s )
-
+    def define_exception( exception, default_message = 'Application Error Occurred', ancestor = 'RuntimeError' )
       class_eval <<-EOD
-        class #{exception_name} < RuntimeError
+        class #{exception.to_s.lame_camel_case} < #{ancestor.to_s.lame_camel_case}
           def initialize( message = nil )
             super( message || "#{default_message}" )
           end

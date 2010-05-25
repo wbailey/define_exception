@@ -6,7 +6,7 @@ require 'spec/test/unit'
 
 include DefineException
 
-@@message = 'This is the default @@message'
+@@message = 'This is the default message'
 
 describe "Define Exception" do
   it "should enable a class to define a custom exception using a string" do
@@ -19,8 +19,9 @@ describe "Define Exception" do
       end
     end
 
+    tde = TestDefineException.new
+
     lambda {
-      tde = TestDefineException.new
       tde.test
     }.should raise_error( TestDefineException::TestException, @@message )
   end
@@ -34,13 +35,14 @@ describe "Define Exception" do
       end
     end
 
+    at = AnotherTest.new
+
     lambda {
-      at = AnotherTest.new
       at.test
     }.should raise_error( AnotherTest::AnotherException, @@message )
   end
 
-  it "should enable a class to define a custom exception using a symbol with underscores automatically converted to camel case" do
+  it "should enable a class to define a custom exception using a symbol converted to camel case" do
     class YetAnotherTest
       define_exception :yet_another_exception, @@message
     
@@ -49,9 +51,34 @@ describe "Define Exception" do
       end
     end
 
+    yat = YetAnotherTest.new
+
     lambda {
-      yat = YetAnotherTest.new
       yat.test
     }.should raise_error( YetAnotherTest::YetAnotherException, @@message )
+  end
+
+  it "should enable a class to define a custom exception subclassing off of a different exception than RuntimeError" do
+    class AnyAncestorTest
+      define_exception 'MyArgException', @@message, 'ArgumentError'
+    
+      def test
+        raise MyArgException
+      end
+    end
+
+    mae = AnyAncestorTest.new
+
+    lambda {
+      mae.test
+    }.should raise_error( AnyAncestorTest::MyArgException, @@message )
+
+    begin
+        mae.test
+    rescue AnyAncestorTest::MyArgException => e
+      e.is_a?( Exception ).should == true
+      e.is_a?( StandardError ).should == true
+      e.is_a?( ArgumentError ).should == true
+    end
   end
 end
