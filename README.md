@@ -41,7 +41,7 @@ the following constructs:
       ...
     end
 
-Syntactically this has more feel like *attr_accessor* and is succint.  The first argument
+Syntactically this has more feel like *attr_accessor* and is succinct.  The first argument
 is either a *string* or *symbol* that defines the name of the exception.  Usage of the
 underscore in the symbol name automatically gets converted to camel case for the exception
 name.  The second argument is the string to define the default message.  This allows
