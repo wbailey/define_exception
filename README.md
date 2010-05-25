@@ -34,9 +34,11 @@ sound trivial but it is not so straightforward when you subclass off of the ruby
 standard exception classes.  This can be done easily with this gem using any of
 the following constructs:
 
-`define_exception 'MyTestException', 'This is my default message'
- define_exception :AnotherTestException, 'This is the default message for another exception'
- define_exception :yet_another_exception, 'There is always more than one way'
-`
+`class MyClass`
+`  define_exception 'MyTestException', 'This is my default message'`
+`  define_exception :AnotherTestException, 'This is the default message for another exception'`
+`  define_exception :yet_another_exception, 'There is always more than one way'`
+`  ...`
+`end`
 
 
