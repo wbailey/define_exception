@@ -60,7 +60,7 @@ describe "Define Exception" do
 
   it "should enable a class to define a custom exception subclassing off of a different exception than RuntimeError" do
     class AnyAncestorTest
-      define_exception 'MyArgException', @@message, 'ArgumentError'
+      define_exception 'MyArgException', @@message, ArgumentError
     
       def test
         raise MyArgException

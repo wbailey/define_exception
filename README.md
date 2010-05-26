@@ -1,8 +1,7 @@
 # define_exception - Custom exceptions with default messages
 
 This gem provides a dry way of defining custom exceptions in your application with default
-messages.  This helps dry your code so that you don't have to constantly define a message
-when using *raise*.
+messages so that you don't have to constantly define a message when using *raise*.
 
 # Installing
 
@@ -53,6 +52,16 @@ The ability to override the default message is still possible as well
 
     raise MyTestException, 'This is a one time error message'
 
+# Changing the Parent Class
+
+By default the parent class is <i>RuntimeError</i>.  For cases where you need
+a different parent class you can supply the class as an optional third argument
+
+    Class MyClass
+      define_exception 'MyTestException', 'This is my default message', ArgumentError
+      ...
+    end
+
 # Examples
 
 See *examples/*
@@ -60,4 +69,3 @@ See *examples/*
 # Testing
 
 For examples on how to test code written using this gem using RSpec see *test/define_exception_spec.rb*
-

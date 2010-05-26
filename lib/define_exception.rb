@@ -16,6 +16,13 @@
 #
 # Any of the above methods will work.
 #
+# = Parent Class
+#
+# By default the parent class of your exception will be <i>RuntimeError</i>.  To change this
+# you can provide the parent as an optional argument:
+#
+#    define_exception 'MyArgError', 'Wrong argument provided', ArgumentError
+#
 # = Usage
 #
 # The standard ruby practice of requiring the gem and then use <i>include DefineException</i> to
